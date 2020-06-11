@@ -1,0 +1,15 @@
+marcas mais/menos vendidas : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+modelo mais/menos vendidos : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+
+marcas que se vendem mais/menos depressa  : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+modelos que se vendem mais/menos depressa : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+
+vendedores com mais/menos vendas                     : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+vendedores com mais/menos carros vendidos            : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+vendedores com mais/menos carros vendidos por vendas : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+
+limpadores com mais/menos carros limpados : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+
+vendas com mais/menos carros                       : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+clientes com mais/menos carros comprados           : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
+clientes com mais/menos carros comprados por venda : desde sempre / por ano / ultimos 356 dias/ ultimos 30 dias / este ano / este mes
