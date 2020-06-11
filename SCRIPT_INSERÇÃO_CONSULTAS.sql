@@ -164,15 +164,20 @@ CONSTRAINT fk_Limpeza_Veiculo_idVeiculo foreign key (idVeiculo) references Veicu
 
 -- Inserir dados nas tabelas
 
-INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('Francisco', 'Jacinto', 'Rua das Flores', 'Torres Vedras', '2560-243', '2190761@my.ipleiria.pt');
-INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('Gabriel', 'Miranda', 'Rua do Pinheiro', 'Torres Vedras', '2560-300', '2190765@my.ipleiria.pt');
+INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('Francisco', 'Jacinto', 'Rua das Flores', 'Torres Vedras', '2300-243', '2190761@my.ipleiria.pt');
+INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('Gabriel', 'Miranda', 'Rua do Pinheiro', 'Torres Novas', '2560-300', '2190765@my.ipleiria.pt');
+INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('João', 'Pedro', 'Rua D.Afonso Henriques', 'Leiria', '2400-243', '111111@my.ipleiria.pt');
+INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('Joana', 'Liz', 'Rua do Pinheiro', 'Lisboa', '2000-300', '2222222@my.ipleiria.pt');
 
 INSERT INTO TelefonesCliente (nrTelefone, idCliente) values (941111111, 1);
 INSERT INTO TelefonesCliente (nrTelefone, idCliente) values (942222222, 2);
+INSERT INTO TelefonesCliente (nrTelefone, idCliente) values (941111111, 3);
+INSERT INTO TelefonesCliente (nrTelefone, idCliente) values (942222222, 4);
 
 INSERT INTO Marca (nome) values ('Mercedes');
 INSERT INTO Marca (nome) values ('BMW');
 INSERT INTO Marca (nome) values ('Ford');
+INSERT INTO Marca (nome) values ('Peugeot');
 
 INSERT INTO Modelo (idMarca, nome) values (1, 'Classe A');
 INSERT INTO Modelo (idMarca, nome) values (1, 'Classe C');
@@ -182,26 +187,39 @@ INSERT INTO Modelo (idMarca, nome) values (1, 'Classe S');
 INSERT INTO Modelo (idMarca, nome) values (2, 'X1');
 INSERT INTO Modelo (idMarca, nome) values (2, 'X3');
 INSERT INTO Modelo (idMarca, nome) values (2, 'X5');
+
 INSERT INTO Modelo (idMarca, nome) values (3, 'Mustang');
+
+INSERT INTO Modelo (idMarca, nome) values (4, '206');
+INSERT INTO Modelo (idMarca, nome) values (4, '106');
+INSERT INTO Modelo (idMarca, nome) values (4, '308');
 
 INSERT INTO Stand (nome, rua, localidade, cod_postal, email) values ('Stand1', 'Rua do Stand1', 'Leiria', '2400-255', 'stand1@my.ipleiria.pt');
 INSERT INTO Stand (nome, rua, localidade, cod_postal, email) values ('Stand2', 'Rua do Stand2', 'Leiria', '2400-243', 'stand2@my.ipleiria.pt');
+INSERT INTO Stand (nome, rua, localidade, cod_postal, email) values ('Stand3', 'Rua do Stand3', 'Leiria', '2400-200', 'stand3@my.ipleiria.pt');
+INSERT INTO Stand (nome, rua, localidade, cod_postal, email) values ('Stand4', 'Rua do Stand4', 'Leiria', '2400-201', 'stand4@my.ipleiria.pt');
 
 INSERT INTO TelefonesStand (nrTelefone, idStand) values (268111111, 1);
 INSERT INTO TelefonesStand (nrTelefone, idStand) values (268222222, 2);
+INSERT INTO TelefonesStand (nrTelefone, idStand) values (268333333, 3);
+INSERT INTO TelefonesStand (nrTelefone, idStand) values (268444444, 4);
 
--- Veiculos Stand 1 - ID's (1, 2)
-
+select * from Veiculo where idStand = 4;
+-- Veiculos Stand 1 - ID (1, 2)
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (1, 1, '2020-01-20', 2500, 2020, 3000, '99-32-ZS', 10000, 400, 5, 'B', 100000);
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (1, 2, '2020-01-10', 3000, 2019, 2700, '22-32-IO', 45000, 325, 2, 'B', 125000);
--- Veiculos Stand 2 - ID's (3, 4, 5)
+-- Veiculos Stand 2 - ID (3, 4, 5 ,6)
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 5, '2020-04-24', 2500, 2018, 2500, '91-22-PT', 50000, 200, 5, 'B', 80000);
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 6, '2020-03-01', 3000, 2016, 2300, '43-54-MJ', 95000, 235, 5, 'B', 45000);
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 7, '2020-02-02', 2300, 2014, 2600, '11-12-UU', 30000, 190, 5, 'B', 100000);
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 8, '2019-12-28', 2300, 2020, 2800, '77-88-OI', 30000, 320, 5, 'B', 50000);
+-- Veiculos Stand 3 - ID (7, 8)
+INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (3, 9, '2019-04-24', 2500, 2018, 2500, '16-23-PY', 50000, 200, 5, 'B', 80000);
+INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (3, 10, '2017-03-01', 3000, 2016, 2300, '41-78-OI', 95000, 235, 5, 'B', 45000);
+-- Veiculos Stand 4 - ID (9)
+INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (4, 11, '2016-04-24', 2500, 2018, 2500, '13-55-LI', 50000, 200, 5, 'B', 80000);
 
 -- Vendedores Stand 1 - ID's (1, 2)
-
 INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values (1, '2018-12-02', 'João', 'Alberto', 'Rua do Touro', 'Lisboa', '1000-010', 'joaoalberto@mail.com');
 INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values (1, '2019-08-15', 'Tomás', 'Silva', 'Rua do Trovão', 'Lisboa', '1000-012', 'tomassilva@mail.com');
 -- Limpadores Stand 1 - ID's (3, 4)
@@ -213,37 +231,55 @@ INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, lo
 -- Limpador Stand 2 - ID's (6)
 INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values (2, '2020-01-02', 'Fábio', 'Santos', 'Rua da Marmita', 'Leiria', '2400-012', 'fabiosantos@mail.com');
 
+-- Vendedor Stand 3 - ID's (7)
+INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values (3, '2013-06-07', 'Almeida', 'Lopes', 'Avenida Humberto Delgado', 'Leiria', '2401-010', 'almeidalopes@mail.com');
+-- Limpador Stand 3 - ID's (8)
+INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values (3, '2002-01-02', 'Luis', 'Santos', 'Rua da Seda', 'Leiria', '2401-012', 'luissantos@mail.com');
+
+
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('971111111', 1);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('972222222', 2);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('973333333', 3);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('974444444', 4);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('975555555', 5);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('976666666', 6);
+INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('977777777', 7);
+INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('978888888', 8);
 
 -- Vendedores Stand 1
 INSERT INTO Vendedor (idVendedor) values (1);
 INSERT INTO Vendedor (idVendedor) values (2);
 -- Vendedor Stand 2
 INSERT INTO Vendedor (idVendedor) values (5);
-
--- Vistas
-CREATE VIEW PrecoCarroID2 AS SELECT preco FROM Veiculo where idVeiculo = 2;
-CREATE VIEW PrecoCarroID5 AS SELECT preco FROM Veiculo where idVeiculo = 5;
-
-INSERT INTO Venda (idcliente, idvendedor, datavenda) values (1, 1, '2020-03-24');
-INSERT INTO Venda (idcliente, idvendedor, datavenda) values (2, 5, '2020-03-11');
-
-INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (2, 1, (select * from PrecoCarroID2));
-INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (5, 2, (select * from PrecoCarroID5));
+-- Vendedor Stand 3
+INSERT INTO Vendedor (idVendedor) values (7);
 
 -- Limpador Stand 1
 INSERT INTO Limpador (idLimpador) values (3);
 INSERT INTO Limpador (idLimpador) values (4);
 -- Limpador Stand 2
 INSERT INTO Limpador (idLimpador) values (6);
+-- Limpador Stand 3
+INSERT INTO Limpador (idLimpador) values (8);
+
+
+-- Vistas
+CREATE VIEW PrecoCarroID2 AS SELECT preco FROM Veiculo where idVeiculo = 2;
+CREATE VIEW PrecoCarroID5 AS SELECT preco FROM Veiculo where idVeiculo = 5;
+CREATE VIEW PrecoCarroID9 AS SELECT preco FROM Veiculo where idVeiculo = 9;
+
+INSERT INTO Venda (idcliente, idvendedor, datavenda) values (1, 1, '2020-03-24');
+INSERT INTO Venda (idcliente, idvendedor, datavenda) values (2, 5, '2020-03-11');
+INSERT INTO Venda (idcliente, idvendedor, datavenda) values (3, 7, '2019-05-22');
+
+INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (2, 1, (select * from PrecoCarroID2));
+INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (5, 2, (select * from PrecoCarroID5));
+INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (9, 3, (select * from PrecoCarroID9));
+
 
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (3, 1, '2020-03-22');
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (6, 3, '2020-03-22');
+INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (8, 8, '2020-03-22');
 
 
 
@@ -255,12 +291,10 @@ select * from modelo;
 
 
 -- Quantidade de veiculos em cada Stand
-
 select count(*) as "Quantidade de Veiculos do Stand 1" from Veiculo where Veiculo.idStand = 1;
 select count(*) as "Quantidade de Veiculos do Stand 1" from Veiculo where Veiculo.idStand = 2;
 
 -- Quantidade de veiculos em cada Stand filtrados por marca
-
 select count(*) as "Quantidade de Veiculos da Marca BMW do Stand 2" from Veiculo
 inner join Modelo
 on Veiculo.idModelo = Modelo.idModelo
@@ -286,8 +320,7 @@ inner join Marca
 on Modelo.idMarca = Marca.idMarca where Marca.nome = 'Mercedes' and Veiculo.idStand = 1;
 
 
--- Detalhes sobre a venda
-
+-- Detalhes sobre a venda do Stand 2
 select Funcionario.primeiroNome as "Nome Vendedor", TIMESTAMPDIFF(DAY, Veiculo.dataRececao, Venda.dataVenda) as "Dias em que o carro teve no Stand até à data da venda",
        VeiculosVenda.preco as "Preco Venda", Venda.dataVenda as "Data Venda", Cliente.primeiroNome as 'Primeiro Nome do Cliente',
        Cliente.ultimoNome as "Último Nome do Cliente " , Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matrícula"
@@ -305,10 +338,9 @@ on VeiculosVenda.idVeiculo = Veiculo.idVeiculo
 inner join Modelo
 on Veiculo.idModelo = Modelo.idModelo
 inner join Marca
-on Modelo.idMarca = Marca.idMarca;
+on Modelo.idMarca = Marca.idMarca where Veiculo.idStand = 2;
 
--- Detalhes sobre Limpeza dos carros
-
+-- Detalhes sobre Limpeza dos carros do Stand 2
 select Funcionario.primeiroNome as "Nome Limpador", Limpeza.dataLimpeza as "Data Limpeza",
        Marca.nome as "Marca", Modelo.nome as "Modelo",  Veiculo.matricula as "Matrícula"
 from Funcionario
@@ -321,4 +353,12 @@ on Limpeza.idVeiculo = Veiculo.idVeiculo
 inner join Modelo
 on Veiculo.idModelo = Modelo.idModelo
 inner join Marca
-on Modelo.idMarca = Marca.idMarca;
+on Modelo.idMarca = Marca.idMarca where Funcionario.idStand = 2;
+
+-- Mostrar veiculos que estão no Stand 2 há mais de três meses
+select Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matricula", Veiculo.dataRececao as "Data Receção Veículo" from Marca
+inner join Modelo
+on Marca.idMarca = Modelo.idMarca
+inner join Veiculo
+on Modelo.idModelo = Veiculo.idModelo
+where TIMESTAMPDIFF(Month, Veiculo.dataRececao, NOW()) > 3 and Veiculo.idStand = 2 ;
