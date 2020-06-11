@@ -269,6 +269,7 @@ CREATE VIEW PrecoCarroID5 AS SELECT preco FROM Veiculo where idVeiculo = 5;
 CREATE VIEW PrecoCarroID9 AS SELECT preco FROM Veiculo where idVeiculo = 9;
 
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (1, 1, '2020-03-24');
+INSERT INTO Venda (idcliente, idvendedor, datavenda) values (1, 1, '2020-03-24');
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (2, 5, '2020-03-11');
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (3, 7, '2019-05-22');
 
@@ -362,3 +363,4 @@ on Marca.idMarca = Modelo.idMarca
 inner join Veiculo
 on Modelo.idModelo = Veiculo.idModelo
 where TIMESTAMPDIFF(Month, Veiculo.dataRececao, NOW()) > 3 and Veiculo.idStand = 2 ;
+
