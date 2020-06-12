@@ -10,8 +10,22 @@ create database Grupo2;
 
 use Grupo2;
 
--- Criação de tabelas
+-- Criação do utilizador Admin com todos os privilégios e com a possibilidade de conceção de privilégios a terceiros
+CREATE USER 'Admin'@'localhost'
+IDENTIFIED BY 'Admin,Grupo2:#2';
 
+GRANT all privileges on Grupo2.*
+to 'Admin'@'localhost' WITH
+GRANT OPTION;
+
+-- Criação do utilizador UtilizadorComum
+CREATE USER 'UtilizadorComum'@'localhost'
+IDENTIFIED BY 'UtilizadorComum,Grupo2:#2';
+
+GRANT SELECT on Grupo2.*
+to 'UtilizadorComum'@'localhost';
+
+-- Criação de tabelas
 CREATE TABLE Cliente (
 idCliente INT unsigned NOT NULL AUTO_INCREMENT,
 primeiroNome VARCHAR(30),
@@ -263,6 +277,7 @@ INSERT INTO Limpador (idLimpador) values (6);
 INSERT INTO Limpador (idLimpador) values (8);
 
 
+
 -- Vistas
 CREATE VIEW PrecoCarroID2 AS SELECT preco FROM Veiculo where idVeiculo = 2;
 CREATE VIEW PrecoCarroID5 AS SELECT preco FROM Veiculo where idVeiculo = 5;
@@ -271,20 +286,19 @@ CREATE VIEW PrecoCarroID9 AS SELECT preco FROM Veiculo where idVeiculo = 9;
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (1, 1, '2020-03-24');
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (1, 1, '2020-03-24');
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (2, 5, '2020-03-11');
-INSERT INTO Venda (idcliente, idvendedor, datavenda) values (3, 7, '2019-05-22');
 
 INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (2, 1, (select * from PrecoCarroID2));
 INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (5, 2, (select * from PrecoCarroID5));
 INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (9, 3, (select * from PrecoCarroID9));
-
 
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (3, 1, '2020-03-22');
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (6, 3, '2020-03-22');
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (8, 8, '2020-03-22');
 
 
-
 -- Selects para testes
+select * from Venda;
+select * from Vendedor;
 select * from VeiculosVenda;
 select * from veiculo;
 select * from Marca;
@@ -302,26 +316,7 @@ on Veiculo.idModelo = Modelo.idModelo
 inner join Marca
 on Modelo.idMarca = Marca.idMarca where Marca.nome = 'BMW' and Veiculo.idStand = 2;
 
-select count(*) as "Quantidade de Veiculos da Marca BMW do Stand 1" from Veiculo
-inner join Modelo
-on Veiculo.idModelo = Modelo.idModelo
-inner join Marca
-on Modelo.idMarca = Marca.idMarca where Marca.nome = 'BMW' and Veiculo.idStand = 1;
-
-select count(*) as "Quantidade de Veiculos da Marca Mercedes do Stand 2" from Veiculo
-inner join Modelo
-on Veiculo.idModelo = Modelo.idModelo
-inner join Marca
-on Modelo.idMarca = Marca.idMarca where Marca.nome = 'Mercedes' and Veiculo.idStand = 2;
-
-select count(*) as "Quantidade de Veiculos da Marca Mercedes do Stand 1" from Veiculo
-inner join Modelo
-on Veiculo.idModelo = Modelo.idModelo
-inner join Marca
-on Modelo.idMarca = Marca.idMarca where Marca.nome = 'Mercedes' and Veiculo.idStand = 1;
-
-
--- Detalhes sobre a venda do Stand 2
+-- Detalhes sobre as vendas do Stand 2
 select Funcionario.primeiroNome as "Nome Vendedor", TIMESTAMPDIFF(DAY, Veiculo.dataRececao, Venda.dataVenda) as "Dias em que o carro teve no Stand até à data da venda",
        VeiculosVenda.preco as "Preco Venda", Venda.dataVenda as "Data Venda", Cliente.primeiroNome as 'Primeiro Nome do Cliente',
        Cliente.ultimoNome as "Último Nome do Cliente " , Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matrícula"
@@ -363,4 +358,33 @@ on Marca.idMarca = Modelo.idMarca
 inner join Veiculo
 on Modelo.idModelo = Veiculo.idModelo
 where TIMESTAMPDIFF(Month, Veiculo.dataRececao, NOW()) > 3 and Veiculo.idStand = 2 ;
+
+-- Vendedores com mais carros vendidos por venda do Stand 1
+select Venda.idVenda as "ID Venda", Vendedor.idVendedor as "ID Vendedor", Funcionario.primeiroNome as "Primeiro Nome Vendedor", Funcionario.ultimoNome as "Ultimo Nome Vendedor",
+       Count(Vendedor.idVendedor) as "Quantidade de Carros na venda"
+from Venda
+inner join Vendedor
+on Venda.idVendedor = Vendedor.idVendedor
+inner join Funcionario
+on Vendedor.idVendedor = Funcionario.idFuncionario
+where Funcionario.idStand = 1
+group by Vendedor.idVendedor order by "Quantidade de Carros na venda" desc ;
+
+-- Clientes que não compraram nada
+Select Cliente.primeiroNome as "Primeiro Nome Cliente", Cliente.ultimoNome as "Último Nome Cliente" from Cliente
+left join Venda
+on Cliente.idCliente = Venda.idCliente where Venda.idVenda is null;
+
+-- Vendedores do Stand 1 que não teem vendas
+select Vendedor.idVendedor as "ID Vendedor", Funcionario.primeiroNome as "Primeiro Nome Funcionário", Funcionario.ultimoNome as "Último Nome Funcionário" from Vendedor
+inner join Funcionario
+on Vendedor.idVendedor = Funcionario.idFuncionario
+left join Venda
+on Vendedor.idVendedor = Venda.idVendedor where Venda.idVenda is null and Funcionario.idStand = 1;
+
+
+
+
+
+
 
