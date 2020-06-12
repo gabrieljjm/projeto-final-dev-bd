@@ -349,7 +349,7 @@ on Veiculo.idStand = Stand.idStand where Stand.idStand = 4;
 -- Detalhes sobre as vendas do Stand 2
 select Funcionario.primeiroNome as "Nome Vendedor", TIMESTAMPDIFF(DAY, Veiculo.dataRececao, Venda.dataVenda) as "Dias em que o carro teve no Stand até à data da venda",
        VeiculosVenda.preco as "Preco Venda", Venda.dataVenda as "Data Venda", Cliente.primeiroNome as 'Primeiro Nome do Cliente',
-       Cliente.ultimoNome as "Último Nome do Cliente " , Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matrícula"
+       Cliente.ultimoNome as "Último Nome do Cliente ", TelefonesCliente.nrTelefone as "Nº Telefone", Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matrícula"
 from Funcionario
 inner join Vendedor
 on Funcionario.idFuncionario = Vendedor.idVendedor
@@ -357,6 +357,8 @@ inner join Venda
 on Vendedor.idVendedor = Venda.idVendedor
 inner join Cliente
 on Venda.idCliente = Cliente.idCliente
+inner join TelefonesCliente
+on Cliente.idCliente = TelefonesCliente.idCliente
 inner join VeiculosVenda
 on Venda.idVenda = VeiculosVenda.idVenda
 inner join Veiculo
