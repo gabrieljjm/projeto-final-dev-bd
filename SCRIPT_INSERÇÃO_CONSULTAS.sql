@@ -16,19 +16,14 @@ DROP USER if exists 'UtilizadorComum'@'localhost';
 
 -- Criação do utilizador Admin com todos os privilégios e com a possibilidade de conceção de privilégios a terceiros
 CREATE USER 'Admin'@'localhost'
-IDENTIFIED BY 'Admin,Grupo2:#2';
-
+IDENTIFIED BY 'Admin123';
 GRANT all privileges on Grupo2.*
 to 'Admin'@'localhost' WITH
 GRANT OPTION;
 
 -- Criação do utilizador UtilizadorComum
 CREATE USER 'UtilizadorComum'@'localhost'
-IDENTIFIED BY 'UtilizadorComum,Grupo2:#2';
-
-drop role if exists colecaoPrivilegios;
-CREATE ROLE colecaoPrivilegios;
-
+IDENTIFIED BY 'UtilizadorComum123';
 
 -- Criação de tabelas
 CREATE TABLE Cliente (
@@ -43,9 +38,10 @@ email VARCHAR(50),
 primary key (idCliente)
 )engine=InnoDB;
 
--- Atribuição de privilégios à tabela Cliente
-GRANT INSERT, SELECT, UPDATE, DELETE ON Cliente TO colecaoPrivilegios;
-GRANT colecaoPrivilegios TO 'UtilizadorComum'@'localhost';
+-- Atribuição de privilégios à ao UtilizadorComum
+GRANT INSERT, SELECT, UPDATE, DELETE ON grupo2.Cliente TO 'UtilizadorComum'@'localhost';
+show grants for current_user ();
+
 
 CREATE TABLE TelefonesCliente (
 nrTelefone int unsigned,
@@ -312,6 +308,8 @@ select * from VeiculosVenda;
 select * from veiculo;
 select * from Marca;
 select * from modelo;
+use Grupo2;
+select * from Cliente;
 
 
 -- Quantidade de veiculos em cada Stand
