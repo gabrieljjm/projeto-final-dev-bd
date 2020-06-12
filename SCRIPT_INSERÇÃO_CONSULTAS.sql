@@ -287,18 +287,22 @@ INSERT INTO Limpador (idLimpador) values (8);
 CREATE VIEW PrecoCarroID2 AS SELECT preco FROM Veiculo where idVeiculo = 2;
 CREATE VIEW PrecoCarroID5 AS SELECT preco FROM Veiculo where idVeiculo = 5;
 CREATE VIEW PrecoCarroID9 AS SELECT preco FROM Veiculo where idVeiculo = 9;
+CREATE VIEW PrecoCarroID1 AS SELECT preco FROM Veiculo where idVeiculo = 1;
 
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (1, 1, '2020-03-24');
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (1, 1, '2020-03-24');
 INSERT INTO Venda (idcliente, idvendedor, datavenda) values (2, 5, '2020-03-11');
+INSERT INTO Venda (idcliente, idvendedor, datavenda) values (3, 2, '2020-02-10');
 
 INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (2, 1, (select * from PrecoCarroID2));
 INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (5, 2, (select * from PrecoCarroID5));
 INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (9, 3, (select * from PrecoCarroID9));
+INSERT INTO VeiculosVenda (idVeiculo, idVenda, preco) values (1, 4, (select * from PrecoCarroID1));
 
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (3, 1, '2020-03-22');
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (6, 3, '2020-03-22');
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (8, 8, '2020-03-22');
+INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (4, 2, '2020-03-22');
 
 
 -- Selects para testes
@@ -308,20 +312,39 @@ select * from VeiculosVenda;
 select * from veiculo;
 select * from Marca;
 select * from modelo;
+select * from Limpador;
+select * from limpeza;
 use Grupo2;
 select * from Cliente;
 
 
 -- Quantidade de veiculos em cada Stand
-select count(*) as "Quantidade de Veiculos do Stand 1" from Veiculo where Veiculo.idStand = 1;
-select count(*) as "Quantidade de Veiculos do Stand 1" from Veiculo where Veiculo.idStand = 2;
+select count(*) as "Quantidade de Veiculos do Stand 1" from Veiculo
+where Veiculo.idStand = 1;
+select count(*) as "Quantidade de Veiculos do Stand 1" from Veiculo
+where Veiculo.idStand = 2;
 
 -- Quantidade de veiculos em cada Stand filtrados por marca
 select count(*) as "Quantidade de Veiculos da Marca BMW do Stand 2" from Veiculo
 inner join Modelo
 on Veiculo.idModelo = Modelo.idModelo
 inner join Marca
-on Modelo.idMarca = Marca.idMarca where Marca.nome = 'BMW' and Veiculo.idStand = 2;
+on Modelo.idMarca = Marca.idMarca
+where Marca.nome = 'BMW' and Veiculo.idStand = 2;
+
+-- Valor total em euros de todos os veiculos em cada Stand
+select Stand.nome as "Nome do Stand", Concat(sum(Veiculo.preco), ' €' ) as "Valor total dos veiculos em cada Stand" from Veiculo
+inner join stand
+on Veiculo.idStand = Stand.idStand where Stand.idStand = 1
+UNION select  Stand.nome, Concat(sum(Veiculo.preco), ' €' )  from Veiculo
+inner join stand
+on Veiculo.idStand = Stand.idStand where Stand.idStand = 2
+UNION select  Stand.nome, Concat(sum(Veiculo.preco), ' €' )  from Veiculo
+inner join stand
+on Veiculo.idStand = Stand.idStand where Stand.idStand = 3
+UNION select  Stand.nome, Concat(sum(Veiculo.preco), ' €' )  from Veiculo
+inner join stand
+on Veiculo.idStand = Stand.idStand where Stand.idStand = 4;
 
 -- Detalhes sobre as vendas do Stand 2
 select Funcionario.primeiroNome as "Nome Vendedor", TIMESTAMPDIFF(DAY, Veiculo.dataRececao, Venda.dataVenda) as "Dias em que o carro teve no Stand até à data da venda",
@@ -341,7 +364,8 @@ on VeiculosVenda.idVeiculo = Veiculo.idVeiculo
 inner join Modelo
 on Veiculo.idModelo = Modelo.idModelo
 inner join Marca
-on Modelo.idMarca = Marca.idMarca where Veiculo.idStand = 2;
+on Modelo.idMarca = Marca.idMarca
+where Veiculo.idStand = 2;
 
 -- Detalhes sobre Limpeza dos carros do Stand 2
 select Funcionario.primeiroNome as "Nome Limpador", Limpeza.dataLimpeza as "Data Limpeza",
@@ -356,7 +380,8 @@ on Limpeza.idVeiculo = Veiculo.idVeiculo
 inner join Modelo
 on Veiculo.idModelo = Modelo.idModelo
 inner join Marca
-on Modelo.idMarca = Marca.idMarca where Funcionario.idStand = 2;
+on Modelo.idMarca = Marca.idMarca
+where Funcionario.idStand = 2;
 
 -- Mostrar veiculos que estão no Stand 2 há mais de três meses
 select Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matricula", Veiculo.dataRececao as "Data Receção Veículo" from Marca
@@ -364,7 +389,7 @@ inner join Modelo
 on Marca.idMarca = Modelo.idMarca
 inner join Veiculo
 on Modelo.idModelo = Veiculo.idModelo
-where TIMESTAMPDIFF(Month, Veiculo.dataRececao, NOW()) > 3 and Veiculo.idStand = 2 ;
+where TIMESTAMPDIFF(Month, Veiculo.dataRececao, NOW()) > 3 and Veiculo.idStand = 2;
 
 -- Vendedores com mais carros vendidos por venda do Stand 1
 select Venda.idVenda as "ID Venda", Vendedor.idVendedor as "ID Vendedor", Funcionario.primeiroNome as "Primeiro Nome Vendedor", Funcionario.ultimoNome as "Ultimo Nome Vendedor",
@@ -375,21 +400,40 @@ on Venda.idVendedor = Vendedor.idVendedor
 inner join Funcionario
 on Vendedor.idVendedor = Funcionario.idFuncionario
 where Funcionario.idStand = 1
-group by Vendedor.idVendedor order by "Quantidade de Carros na venda" desc ;
+group by Vendedor.idVendedor
+order by "Quantidade de Carros na venda" desc ;
 
--- Clientes que não compraram nada
-Select Cliente.primeiroNome as "Primeiro Nome Cliente", Cliente.ultimoNome as "Último Nome Cliente" from Cliente
-left join Venda
-on Cliente.idCliente = Venda.idCliente where Venda.idVenda is null;
-
--- Vendedores do Stand 1 que não teem vendas
+-- Vendedores do Stand 3 que não teem vendas
 select Vendedor.idVendedor as "ID Vendedor", Funcionario.primeiroNome as "Primeiro Nome Funcionário", Funcionario.ultimoNome as "Último Nome Funcionário" from Vendedor
 inner join Funcionario
 on Vendedor.idVendedor = Funcionario.idFuncionario
 left join Venda
-on Vendedor.idVendedor = Venda.idVendedor where Venda.idVenda is null and Funcionario.idStand = 1;
+on Vendedor.idVendedor = Venda.idVendedor
+where Venda.idVenda is null and Funcionario.idStand = 3;
 
+-- Vendedores Stand 3
+select Vendedor.idVendedor as "ID Vendedor", Funcionario.primeiroNome as "Primeiro Nome Funcionário", Funcionario.ultimoNome as "Último Nome Funcionário" from Vendedor
+inner join Funcionario
+on Vendedor.idVendedor = Funcionario.idFuncionario
+inner join Stand
+on Funcionario.idStand = Stand.idStand
+where Stand.idStand = 3;
 
+-- Clientes que não compraram nada
+Select Cliente.primeiroNome as "Primeiro Nome Cliente", Cliente.ultimoNome as "Último Nome Cliente" from Cliente
+left join Venda
+on Cliente.idCliente = Venda.idCliente
+where Venda.idVenda is null;
+
+-- Veiculos do Stand 2 que não foram limpos
+select Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matrícula", Veiculo.dataRececao as "Data em que o carro chegou ao Stand" from Veiculo
+left join limpeza
+on Veiculo.idVeiculo = Limpeza.idVeiculo
+inner join Modelo
+on Veiculo.idModelo = Modelo.idModelo
+inner join Marca
+on Modelo.idMarca = Marca.idMarca
+where Limpeza.idLimpeza is null and Veiculo.idStand = 2;
 
 
 
