@@ -10,6 +10,10 @@ create database Grupo2;
 
 use Grupo2;
 
+
+DROP USER if exists 'Admin'@'localhost';
+DROP USER if exists 'UtilizadorComum'@'localhost';
+
 -- Criação do utilizador Admin com todos os privilégios e com a possibilidade de conceção de privilégios a terceiros
 CREATE USER 'Admin'@'localhost'
 IDENTIFIED BY 'Admin,Grupo2:#2';
@@ -22,8 +26,9 @@ GRANT OPTION;
 CREATE USER 'UtilizadorComum'@'localhost'
 IDENTIFIED BY 'UtilizadorComum,Grupo2:#2';
 
-GRANT SELECT on Grupo2.*
-to 'UtilizadorComum'@'localhost';
+drop role if exists colecaoPrivilegios;
+CREATE ROLE colecaoPrivilegios;
+
 
 -- Criação de tabelas
 CREATE TABLE Cliente (
@@ -37,6 +42,10 @@ email VARCHAR(50),
 
 primary key (idCliente)
 )engine=InnoDB;
+
+-- Atribuição de privilégios à tabela Cliente
+GRANT INSERT, SELECT, UPDATE, DELETE ON Cliente TO colecaoPrivilegios;
+GRANT colecaoPrivilegios TO 'UtilizadorComum'@'localhost';
 
 CREATE TABLE TelefonesCliente (
 nrTelefone int unsigned,
