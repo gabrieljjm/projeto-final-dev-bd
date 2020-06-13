@@ -28,12 +28,12 @@ IDENTIFIED BY 'UtilizadorComum123';
 -- Criação de tabelas
 CREATE TABLE Cliente (
 idCliente INT unsigned NOT NULL AUTO_INCREMENT,
-primeiroNome VARCHAR(30),
-ultimoNome VARCHAR(30),
-rua VARCHAR(30),
-localidade VARCHAR(30),
-cod_postal VARCHAR(8),
-email VARCHAR(50),
+primeiroNome VARCHAR(30) NOT NULL,
+ultimoNome VARCHAR(30) NOT NULL,
+rua VARCHAR(30) NOT NULL,
+localidade VARCHAR(30) NOT NULL,
+cod_postal VARCHAR(8) NOT NULL,
+email VARCHAR(50) NOT NULL,
 
 primary key (idCliente)
 )engine=InnoDB;
@@ -44,7 +44,7 @@ show grants for current_user ();
 
 
 CREATE TABLE TelefonesCliente (
-nrTelefone int unsigned,
+nrTelefone int unsigned NOT NULL,
 idCliente int unsigned not null,
 
 primary key (nrTelefone, idCliente),
@@ -53,15 +53,15 @@ CONSTRAINT fk_TelefonesCliente_Cliente_idCliente foreign key (idCliente) referen
 
 CREATE TABLE Marca (
 idMarca INT unsigned NOT NULL AUTO_INCREMENT,
-nome varchar(20),
+nome varchar(20) NOT NULL,
 
 primary key (idMarca)
 )engine=InnoDB;
 
 CREATE TABLE Modelo (
 idModelo INT unsigned NOT NULL AUTO_INCREMENT,
-idMarca int unsigned,
-nome varchar(20),
+idMarca int unsigned NOT NULL,
+nome varchar(20) NOT NULL,
 
 Primary key (idModelo),
 CONSTRAINT fk_Modelo_Marca_idMarca foreign key (idMarca) references Marca(idMarca)
@@ -69,19 +69,19 @@ CONSTRAINT fk_Modelo_Marca_idMarca foreign key (idMarca) references Marca(idMarc
 
 CREATE TABLE Stand (
 idStand INT unsigned NOT NULL AUTO_INCREMENT,
-nome VARCHAR(30),
-rua VARCHAR(30),
-localidade VARCHAR(30),
-cod_postal VARCHAR(8),
-email VARCHAR(50),
+nome VARCHAR(30) NOT NULL,
+rua VARCHAR(30) NOT NULL,
+localidade VARCHAR(30) NOT NULL,
+cod_postal VARCHAR(8) NOT NULL,
+email VARCHAR(50) NOT NULL,
 
 primary key (idStand),
 CONSTRAINT uk_stand_email unique (email)
 )engine=InnoDB;
 
 CREATE TABLE TelefonesStand (
-nrTelefone int unsigned,
-idStand int unsigned,
+nrTelefone int unsigned NOT NULL,
+idStand int unsigned NOT NULL,
 
 primary key (nrTelefone, idStand),
 CONSTRAINT fk_TelefonesStand_Stand_idStand foreign key (idStand) references Stand(idStand)
@@ -89,18 +89,18 @@ CONSTRAINT fk_TelefonesStand_Stand_idStand foreign key (idStand) references Stan
 
 CREATE TABLE Veiculo (
 idVeiculo INT unsigned NOT NULL AUTO_INCREMENT,
-idStand int unsigned,
-idModelo int unsigned,
-dataRececao date,
-peso double,
-ano int,
-cilindrada int,
-matricula varchar(10),
-nrQuilometros double,
-potencia int,
-lotacao int,
-categoria varchar(5),
-preco double,
+idStand int unsigned NOT NULL,
+idModelo int unsigned NOT NULL,
+dataRececao date NOT NULL,
+peso double NOT NULL,
+ano int NOT NULL,
+cilindrada int NOT NULL,
+matricula varchar(10) NOT NULL,
+nrQuilometros double NOT NULL,
+potencia int NOT NULL,
+lotacao int NOT NULL,
+categoria varchar(5) NOT NULL,
+preco double NOT NULL,
 
 primary key (idVeiculo),
 CONSTRAINT fk_Veiculo_Stand_idStand foreign key (idStand) references Stand(idStand),
@@ -109,14 +109,14 @@ CONSTRAINT fk_Veiculo_Modelo_idModelo foreign key (idModelo) references Modelo(i
 
 CREATE TABLE Funcionario (
 idFuncionario INT unsigned NOT NULL AUTO_INCREMENT,
-idStand int unsigned,
-dataAdmissao date,
-primeiroNome VARCHAR(30),
-ultimoNome VARCHAR(30),
-rua VARCHAR(30),
-localidade VARCHAR(30),
-cod_postal VARCHAR(8),
-email VARCHAR(50),
+idStand int unsigned NOT NULL,
+dataAdmissao date NOT NULL,
+primeiroNome VARCHAR(30) NOT NULL,
+ultimoNome VARCHAR(30) NOT NULL,
+rua VARCHAR(30) NOT NULL,
+localidade VARCHAR(30) NOT NULL,
+cod_postal VARCHAR(8) NOT NULL,
+email VARCHAR(50) NOT NULL,
 
 primary key (idFuncionario),
 CONSTRAINT uk_funcionario_email unique (email),
@@ -124,15 +124,15 @@ CONSTRAINT fk_funcionario_stand_idStand foreign key (idStand) references Stand(i
 )engine=InnoDB;
 
 CREATE TABLE TelefonesFuncionario (
-nrTelefone int unsigned,
-idFuncionario int unsigned,
+nrTelefone int unsigned NOT NULL,
+idFuncionario int unsigned NOT NULL,
 
 primary key (nrTelefone,idFuncionario),
 CONSTRAINT fk_TelefonesFuncionario_Funcionario_idFuncionario foreign key (idFuncionario) references Funcionario(idFuncionario)
 )engine=InnoDB;
 
 CREATE TABLE Vendedor (
-idVendedor int unsigned,
+idVendedor int unsigned NOT NULL,
 
 primary key (idVendedor),
 CONSTRAINT fk_Vendedor_idVendedor foreign key (idVendedor) references Funcionario(idFuncionario)
@@ -140,9 +140,9 @@ CONSTRAINT fk_Vendedor_idVendedor foreign key (idVendedor) references Funcionari
 
 CREATE TABLE Venda(
 idVenda INT unsigned NOT NULL AUTO_INCREMENT,
-idCliente int unsigned,
-idVendedor int unsigned,
-dataVenda date,
+idCliente int unsigned NOT NULL,
+idVendedor int unsigned NOT NULL,
+dataVenda date NOT NULL,
 
 primary key (idVenda),
 CONSTRAINT fk_Venda_Cliente_idCliente foreign key (idCliente) references Cliente(idCliente),
@@ -150,9 +150,9 @@ CONSTRAINT fk_Venda_Vendedor_idVendedor foreign key (idVendedor) references Vend
 )engine=InnoDB;
 
 CREATE TABLE VeiculosVenda(
-idVeiculo int unsigned,
-idVenda int unsigned,
-preco double,
+idVeiculo int unsigned NOT NULL,
+idVenda int unsigned NOT NULL,
+preco double NOT NULL,
 
 primary key (idVeiculo),
 CONSTRAINT fk_VeiculosVenda_idVeiculo foreign key (idVeiculo) references Veiculo(idVeiculo),
@@ -160,7 +160,7 @@ CONSTRAINT fk_VeiculosVenda_Venda_idVenda foreign key (idVenda) references Venda
 )engine=InnoDB;
 
 CREATE TABLE Limpador (
-idLimpador int unsigned,
+idLimpador int unsigned NOT NULL,
 
 primary key (idLimpador),
 CONSTRAINT fk_Limpador_idLimpador foreign key (idLimpador) references Funcionario(idFuncionario)
@@ -168,9 +168,9 @@ CONSTRAINT fk_Limpador_idLimpador foreign key (idLimpador) references Funcionari
 
 CREATE TABLE Limpeza(
 idLimpeza INT unsigned NOT NULL AUTO_INCREMENT,
-idLimpador int unsigned,
-idVeiculo int unsigned,
-dataLimpeza date,
+idLimpador int unsigned NOT NULL,
+idVeiculo int unsigned NOT NULL,
+dataLimpeza date NOT NULL,
 
 primary key (idLimpeza),
 CONSTRAINT fk_Limpeza_Limpador_idLimpador foreign key (idLimpador) references Limpador(idLimpador),
