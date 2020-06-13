@@ -197,6 +197,7 @@ INSERT INTO Marca (nome) values ('Mercedes');
 INSERT INTO Marca (nome) values ('BMW');
 INSERT INTO Marca (nome) values ('Ford');
 INSERT INTO Marca (nome) values ('Peugeot');
+INSERT INTO Marca (nome) values ('Citroen');
 
 INSERT INTO Modelo (idMarca, nome) values (1, 'Classe A');
 INSERT INTO Modelo (idMarca, nome) values (1, 'Classe C');
@@ -210,6 +211,10 @@ INSERT INTO Modelo (idMarca, nome) values (3, 'Mustang');
 INSERT INTO Modelo (idMarca, nome) values (4, '206');
 INSERT INTO Modelo (idMarca, nome) values (4, '106');
 INSERT INTO Modelo (idMarca, nome) values (4, '308');
+
+INSERT INTO Modelo (idMarca, nome) values (5, 'C3');
+INSERT INTO Modelo (idMarca, nome) values (5, 'Picasso');
+INSERT INTO Modelo (idMarca, nome) values (5, 'Space Tourer');
 
 INSERT INTO Stand (nome, rua, localidade, cod_postal, email) values ('Stand1', 'Rua do Stand1', 'Leiria', '2400-255', 'stand1@my.ipleiria.pt');
 INSERT INTO Stand (nome, rua, localidade, cod_postal, email) values ('Stand2', 'Rua do Stand2', 'Leiria', '2400-243', 'stand2@my.ipleiria.pt');
@@ -235,7 +240,7 @@ INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matr
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (3, 10, '2017-03-01', 3000, 2016, 2300, '41-78-OI', 95000, 235, 5, 'B', 45000);
 -- Veiculos Stand 4 - ID (9)
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (4, 11, '2016-04-24', 2500, 2018, 2500, '13-55-LI', 50000, 200, 5, 'B', 80000);
-
+select * from modelo;
 -- Vendedores Stand 1 - ID's (1, 2)
 INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values (1, '2018-12-02', 'João', 'Alberto', 'Rua do Touro', 'Lisboa', '1000-010', 'joaoalberto@mail.com');
 INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values (1, '2019-08-15', 'Tomás', 'Silva', 'Rua do Trovão', 'Lisboa', '1000-012', 'tomassilva@mail.com');
