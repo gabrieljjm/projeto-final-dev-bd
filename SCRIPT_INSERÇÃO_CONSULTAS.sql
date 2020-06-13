@@ -229,10 +229,10 @@ INSERT INTO TelefonesStand (nrTelefone, idStand) values (268444444, 4);
 select * from Veiculo where idStand = 4;
 -- Veiculos Stand 1 - ID (1, 2)
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (1, 1, '2020-01-20', 2500, 2020, 1900, '99-32-ZS', 10000, 100, 5, 'B', 100000);
-INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (1, 2, '2020-01-10', 3000, 2019, 2700, '22-32-IO', 45000, 325, 2, 'B', 125000);
+INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (1, 2, '2020-01-10', 2500, 2019, 2700, '22-32-IO', 45000, 325, 2, 'B', 125000);
 -- Veiculos Stand 2 - ID (3, 4, 5 ,6)
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 5, '2020-04-24', 2500, 2018, 2500, '91-22-PT', 50000, 200, 5, 'B', 80000);
-INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 6, '2020-03-01', 3000, 2016, 2300, '43-54-MJ', 95000, 235, 5, 'B', 45000);
+INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 6, '2020-03-01', 2500, 2016, 2300, '43-54-MJ', 95000, 235, 5, 'B', 45000);
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 7, '2020-02-02', 2300, 2014, 2600, '11-12-UU', 30000, 190, 5, 'B', 100000);
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (2, 8, '2019-12-28', 2300, 2020, 2800, '77-88-OI', 30000, 320, 5, 'B', 50000);
 -- Veiculos Stand 3 - ID (7, 8)
