@@ -21,9 +21,13 @@ GRANT all privileges on Grupo2.*
 to 'Admin'@'localhost' WITH
 GRANT OPTION;
 
--- Criação do utilizador UtilizadorComum
-CREATE USER 'UtilizadorComum'@'localhost'
-IDENTIFIED BY 'UtilizadorComum123';
+-- Criação do utilizador Vendedor
+CREATE USER 'Vendedor'@'localhost'
+IDENTIFIED BY 'Vendedor123';
+
+-- Criação do utilizador Limpador
+CREATE USER 'Limpador'@'localhost'
+IDENTIFIED BY 'Limpador123';
 
 -- Criação de tabelas
 CREATE TABLE Cliente (
@@ -37,11 +41,6 @@ email VARCHAR(50) NOT NULL,
 
 primary key (idCliente)
 )engine=InnoDB;
-
--- Atribuição de privilégios à ao UtilizadorComum
-GRANT INSERT, SELECT, UPDATE, DELETE ON grupo2.Cliente TO 'UtilizadorComum'@'localhost';
-show grants for current_user ();
-
 
 CREATE TABLE TelefonesCliente (
 nrTelefone int unsigned NOT NULL,
@@ -149,6 +148,9 @@ CONSTRAINT fk_Venda_Cliente_idCliente foreign key (idCliente) references Cliente
 CONSTRAINT fk_Venda_Vendedor_idVendedor foreign key (idVendedor) references Vendedor(idVendedor)
 )engine=InnoDB;
 
+-- Atribuição de privilégios ao Vendedor
+GRANT INSERT, SELECT, UPDATE, DELETE ON grupo2.Venda  TO 'Vendedor'@'localhost';
+
 CREATE TABLE VeiculosVenda(
 idVeiculo int unsigned NOT NULL,
 idVenda int unsigned NOT NULL,
@@ -177,8 +179,8 @@ CONSTRAINT fk_Limpeza_Limpador_idLimpador foreign key (idLimpador) references Li
 CONSTRAINT fk_Limpeza_Veiculo_idVeiculo foreign key (idVeiculo) references Veiculo(idVeiculo)
 )engine=InnoDB;
 
-
-
+-- Atribuição de privilégios ao Limpador
+GRANT INSERT, SELECT, UPDATE, DELETE ON grupo2.Limpeza  TO 'Limpador'@'localhost';
 
 
 -- Inserir dados nas tabelas
@@ -385,7 +387,7 @@ on Modelo.idMarca = Marca.idMarca
 where Veiculo.idStand = 2
 order by Venda.dataVenda asc;
 
--- Detalhes sobre Limpeza dos carros do Stand 2
+-- Detalhes sobre Limpeza dos carros do Stand 3
 select Funcionario.primeiroNome as "Nome Limpador", Limpeza.dataLimpeza as "Data Limpeza",
        Marca.nome as "Marca", Modelo.nome as "Modelo",  Veiculo.matricula as "Matrícula"
 from Funcionario
@@ -399,7 +401,7 @@ inner join Modelo
 on Veiculo.idModelo = Modelo.idModelo
 inner join Marca
 on Modelo.idMarca = Marca.idMarca
-where Funcionario.idStand = 2 order by Limpeza.dataLimpeza asc;
+where Funcionario.idStand = 3 order by Limpeza.dataLimpeza asc;
 
 -- Mostrar veiculos que estão no Stand 2 há mais de três meses
 select Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matricula", Veiculo.dataRececao as "Data Receção Veículo" from Marca
