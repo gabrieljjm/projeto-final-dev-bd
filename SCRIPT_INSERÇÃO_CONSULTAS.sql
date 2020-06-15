@@ -12,7 +12,8 @@ use Grupo2;
 
 
 DROP USER if exists 'Admin'@'localhost';
-DROP USER if exists 'UtilizadorComum'@'localhost';
+DROP USER if exists 'Vendedor'@'localhost';
+DROP USER if exists 'Limpador'@'localhost';
 
 -- Criação do utilizador Admin com todos os privilégios e com a possibilidade de conceção de privilégios a terceiros
 CREATE USER 'Admin'@'localhost'
@@ -262,6 +263,7 @@ INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, lo
 
 
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('971111111', 1);
+INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('981111111', 1);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('972222222', 2);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('973333333', 3);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('974444444', 4);
@@ -445,7 +447,7 @@ on Modelo.idMarca = Marca.idMarca
 where Limpeza.idLimpeza is null and Veiculo.idStand = 2 order by Veiculo.dataRececao asc;
 
 
--- Group By
+-- Group By e Subconsultas
 -- Vendedores com mais carros vendidos por venda do Stand 1
 select Venda.idVenda as "ID Venda", Vendedor.idVendedor as "ID Vendedor", Funcionario.primeiroNome as "Primeiro Nome Vendedor", Funcionario.ultimoNome as "Ultimo Nome Vendedor",
        Count(Vendedor.idVendedor) as "Quantidade de Carros na venda"
@@ -458,7 +460,17 @@ where Funcionario.idStand = 1
 group by Vendedor.idVendedor
 order by "Quantidade de Carros na venda" desc ;
 
--- Subconsultas
+-- Quantidade de números de telefone por vendedor
+select Funcionario.primeiroNome as "Primeiro nome", Funcionario.ultimoNome as "Último nome",
+       count(Funcionario.idFuncionario) as "Quantidade de números de telefone" from TelefonesFuncionario
+inner join Funcionario
+on TelefonesFuncionario.idFuncionario = Funcionario.idFuncionario
+inner join Vendedor
+on Funcionario.idFuncionario = Vendedor.idVendedor
+where Funcionario.idFuncionario in (select * from Vendedor)
+group by Funcionario.idFuncionario
+order by count(Funcionario.idFuncionario) desc;
+
 -- Veiculos de todos os Stand cujo a potencia é igual ou maior a 200
 select Marca.nome as "Marca", Modelo.nome as "Modelo", Veiculo.matricula as "Matrícula", Veiculo.potencia as "Potência" from Veiculo
 inner join Modelo
