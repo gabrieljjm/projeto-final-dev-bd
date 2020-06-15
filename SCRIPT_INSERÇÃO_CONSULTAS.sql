@@ -10,7 +10,6 @@ create database Grupo2;
 
 use Grupo2;
 
-
 DROP USER if exists 'Admin'@'localhost';
 DROP USER if exists 'Vendedor'@'localhost';
 DROP USER if exists 'Limpador'@'localhost';
@@ -183,9 +182,7 @@ CONSTRAINT fk_Limpeza_Veiculo_idVeiculo foreign key (idVeiculo) references Veicu
 -- Atribuição de privilégios ao Limpador
 GRANT INSERT, SELECT, UPDATE, DELETE ON grupo2.Limpeza  TO 'Limpador'@'localhost';
 
-
 -- Inserir dados nas tabelas
-
 INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('Francisco', 'Jacinto', 'Rua das Flores', 'Torres Vedras', '2300-243', '2190761@my.ipleiria.pt');
 INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('Gabriel', 'Miranda', 'Rua do Pinheiro', 'Torres Novas', '2560-300', '2190765@my.ipleiria.pt');
 INSERT INTO Cliente (primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values ('João', 'Pedro', 'Rua D.Afonso Henriques', 'Leiria', '2400-243', '111111@my.ipleiria.pt');
@@ -229,7 +226,6 @@ INSERT INTO TelefonesStand (nrTelefone, idStand) values (268222222, 2);
 INSERT INTO TelefonesStand (nrTelefone, idStand) values (268333333, 3);
 INSERT INTO TelefonesStand (nrTelefone, idStand) values (268444444, 4);
 
-select * from Veiculo where idStand = 4;
 -- Veiculos Stand 1 - ID (1, 2)
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (1, 1, '2020-01-20', 2500, 2020, 1900, '99-32-ZS', 10000, 100, 5, 'B', 100000);
 INSERT INTO Veiculo (idStand, idModelo, dataRececao, peso, ano, cilindrada, matricula, nrQuilometros, potencia, lotacao, categoria, preco) values (1, 2, '2020-01-10', 2500, 2019, 2700, '22-32-IO', 45000, 325, 2, 'B', 125000);
@@ -261,13 +257,14 @@ INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, lo
 -- Limpador Stand 3 - ID's (8)
 INSERT INTO Funcionario(idStand, dataAdmissao, primeiroNome, ultimoNome, rua, localidade, cod_postal, email) values (3, '2002-01-02', 'Luis', 'Santos', 'Rua da Seda', 'Leiria', '2401-012', 'luissantos@mail.com');
 
-
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('971111111', 1);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('981111111', 1);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('972222222', 2);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('973333333', 3);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('974444444', 4);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('975555555', 5);
+INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('985555555', 5);
+INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('985555556', 5);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('976666666', 6);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('977777777', 7);
 INSERT INTO TelefonesFuncionario (nrTelefone, idFuncionario) values ('978888888', 8);
@@ -287,8 +284,6 @@ INSERT INTO Limpador (idLimpador) values (4);
 INSERT INTO Limpador (idLimpador) values (6);
 -- Limpador Stand 3
 INSERT INTO Limpador (idLimpador) values (8);
-
-
 
 -- Vistas
 CREATE VIEW PrecoCarroID2 AS SELECT preco FROM Veiculo where idVeiculo = 2;
@@ -310,19 +305,6 @@ INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (3, 1, '2020-03-
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (6, 3, '2020-03-22');
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (8, 8, '2020-03-22');
 INSERT INTO Limpeza (idLimpador, idVeiculo, dataLimpeza) values (4, 2, '2020-03-22');
-
-
--- Selects para testes
-select * from Venda;
-select * from Vendedor;
-select * from VeiculosVenda;
-select * from veiculo;
-select * from Marca;
-select * from modelo;
-select * from Limpador;
-select * from limpeza;
-use Grupo2;
-select * from Cliente;
 
 
 -- Quantidade de veiculos em cada Stand
@@ -412,8 +394,6 @@ on Marca.idMarca = Modelo.idMarca
 inner join Veiculo
 on Modelo.idModelo = Veiculo.idModelo
 where TIMESTAMPDIFF(Month, Veiculo.dataRececao, NOW()) > 3 and Veiculo.idStand = 2 order by Veiculo.dataRececao;
-
-
 
 -- Vendedores do Stand 3 que não teem vendas
 select Vendedor.idVendedor as "ID Vendedor", Funcionario.primeiroNome as "Primeiro Nome Funcionário", Funcionario.ultimoNome as "Último Nome Funcionário" from Vendedor
